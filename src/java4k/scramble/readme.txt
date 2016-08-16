@@ -1,5 +1,5 @@
-
-By Tim Foden
+Scramble
+========
 
 Description
 -----------
@@ -7,6 +7,8 @@ Description
 My attempt at the age old classic arcade game SCRAMBLE.
 
 Have fun!
+
+By Tim Foden
 
 Instructions
 ------------

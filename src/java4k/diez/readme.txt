@@ -1,8 +1,12 @@
+Die Z
+=====
 
 Description
 -----------
 
-Everyone has been reduced to zombies by the virulent 'flying pig' virus mutated from a combination of bird and swine flu. Unfortunately your supply of stale pizza has dried up and you must go and forage for supplies. Grabbing your axe from under the bed you set out...
+Everyone has been reduced to zombies by the virulent 'flying pig' virus mutated from a combination of bird and swine flu. 
+Unfortunately your supply of stale pizza has dried up and you must go and forage for supplies. 
+Grabbing your axe from under the bed you set out...
 
 Objective
 

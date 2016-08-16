@@ -1,3 +1,5 @@
+Mage Wars
+=========
 
 Description
 -----------
