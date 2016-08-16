@@ -568,17 +568,17 @@ public class a extends Applet implements Runnable {
 	}
 
 	// to run in window, uncomment below
-	/*public static void main(String[] args) throws Throwable {
-	  javax.swing.JFrame frame = new javax.swing.JFrame("Boing 4K");
-	  frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-	  a applet = new a();
-	  applet.setPreferredSize(new java.awt.Dimension(512, 512));
-	  frame.add(applet, java.awt.BorderLayout.CENTER);
-	  frame.setResizable(false);
-	  frame.pack();
-	  frame.setLocationRelativeTo(null);
-	  frame.setVisible(true);
-	  Thread.sleep(250);
-	  applet.start();
-	}*/
+	public static void main(String[] args) throws Throwable {
+		javax.swing.JFrame frame = new javax.swing.JFrame("Boing 4K");
+		frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+		a applet = new a();
+		applet.setPreferredSize(new java.awt.Dimension(512, 512));
+		frame.add(applet, java.awt.BorderLayout.CENTER);
+		frame.setResizable(false);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+		Thread.sleep(250);
+		applet.start();
+	}
 }
