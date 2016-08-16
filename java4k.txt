@@ -1,3 +1,6 @@
+Done
+----
+
 http://www.java4k.com/index.php?action=games&method=view&gid=330
 http://www.java4k.com/index.php?action=games&method=view&gid=326
 http://www.java4k.com/index.php?action=games&method=view&gid=348
@@ -18,24 +21,34 @@ http://www.java4k.com/index.php?action=games&method=view&gid=258
 http://www.java4k.com/index.php?action=games&method=view&gid=201 not GPL
 http://www.java4k.com/index.php?action=games&method=view&gid=176
 http://www.java4k.com/index.php?action=games&method=view&gid=491
-http://www.java4k.com/index.php?action=games&method=view&gid=483
+http://www.java4k.com/index.php?action=games&method=view&gid=483 
 http://www.java4k.com/index.php?action=games&method=view&gid=418
 http://www.java4k.com/index.php?action=games&method=view&gid=408
 http://www.java4k.com/index.php?action=games&method=view&gid=478
 http://www.java4k.com/index.php?action=games&method=view&gid=455
 http://www.java4k.com/index.php?action=games&method=view&gid=368
 http://www.java4k.com/index.php?action=games&method=view&gid=380
-http://www.java4k.com/index.php?action=games&method=view&gid=358
-http://www.java4k.com/index.php?action=games&method=view&gid=354
+http://www.java4k.com/index.php?action=games&method=view&gid=358 no sources
+http://www.java4k.com/index.php?action=games&method=view&gid=354 no sources
 http://www.java4k.com/index.php?action=games&method=view&gid=389
 http://www.java4k.com/index.php?action=games&method=view&gid=377
 http://www.java4k.com/index.php?action=games&method=view&gid=372
 http://www.java4k.com/index.php?action=games&method=view&gid=394
-http://www.java4k.com/index.php?action=games&method=view&gid=371
-http://www.java4k.com/index.php?action=games&method=view&gid=356
+http://www.java4k.com/index.php?action=games&method=view&gid=371 no sources
+http://www.java4k.com/index.php?action=games&method=view&gid=356 no sources
 http://www.java4k.com/index.php?action=games&method=view&gid=332
 http://www.java4k.com/index.php?action=games&method=view&gid=338
 http://www.java4k.com/index.php?action=games&method=view&gid=335
-http://www.java4k.com/index.php?action=games&method=view&gid=352
+http://www.java4k.com/index.php?action=games&method=view&gid=352 no sources
 http://www.java4k.com/index.php?action=games&method=view&gid=327
-http://www.java4k.com/index.php?action=games&method=view&gid=319
+http://www.java4k.com/index.php?action=games&method=view&gid=319 no sources
+http://www.java4k.com/index.php?action=games&method=view&gid=340
+http://www.java4k.com/index.php?action=games&method=view&gid=329
+http://www.java4k.com/index.php?action=games&method=view&gid=281
+
+To do
+-----
+
+
+
+
