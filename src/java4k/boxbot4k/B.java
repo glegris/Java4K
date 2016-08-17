@@ -30,21 +30,19 @@ package java4k.boxbot4k;
  */
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java4k.GamePanel;
 
-import javax.swing.JApplet;
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
 
-public final class B extends JApplet implements KeyListener, MouseListener, Runnable {
+public final class B extends GamePanel {
 
 	private static final int OUTER_FLOOR = 0;
 	private static final int FLOOR = 1;
@@ -209,9 +207,11 @@ public final class B extends JApplet implements KeyListener, MouseListener, Runn
 			BLOCK_GFX[i] = image;
 		}
 	}
+	
+	private static final int WIDTH = TABLE_WIDTH * BLOCK_SIZE;
+	private static final int HEIGHT = TABLE_HEIGHT * BLOCK_SIZE;
 
 	private Image screenBuffer;
-	private JComponent canvas;
 	private int[] table;
 	private int playerX;
 	private int playerY;
@@ -221,38 +221,25 @@ public final class B extends JApplet implements KeyListener, MouseListener, Runn
 	private boolean levelSolved;
 	private boolean keyPress;
 	private boolean gameStarted;
-
-	@Override
-	public void init() {
-		try {
-			SwingUtilities.invokeAndWait(this);
-		} catch (Exception e) {
-			//e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void run() {
+	
+	public B() {
 		screenBuffer = new BufferedImage(TABLE_WIDTH * BLOCK_SIZE, TABLE_HEIGHT * BLOCK_SIZE, BufferedImage.TYPE_INT_RGB);
 
 		table = new int[TABLE_WIDTH * TABLE_HEIGHT];
 		level = 0;
 		loadLevel();
 
-		canvas = new JComponent() {
-			@Override
-			protected void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				paintTableGraphics(g);
-			}
-		};
-
-		getContentPane().add(canvas);
-		addMouseListener(this);
-		addKeyListener(this);
+		//addMouseListener(this);
+		//addKeyListener(this);
+	}
+	
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(WIDTH, HEIGHT);
 	}
 
-	private void paintTableGraphics(Graphics g) {
+	@Override
+	public void paintComponent(Graphics g) {
 		Graphics buffer = screenBuffer.getGraphics();
 		for (int i = 0; i < 3; i++) { // 3 step: draw floor, draw shadows, draw other elements
 			for (int x = 0; x < TABLE_WIDTH; x++) {
@@ -328,7 +315,7 @@ public final class B extends JApplet implements KeyListener, MouseListener, Runn
 
 		if (!gameStarted) {
 			gameStarted = true;
-			canvas.repaint();
+			repaint();
 			return;
 		}
 
@@ -392,7 +379,7 @@ public final class B extends JApplet implements KeyListener, MouseListener, Runn
 		}
 		levelSolved = boxesOnGoal;
 
-		canvas.repaint();
+		repaint();
 	}
 
 	@Override

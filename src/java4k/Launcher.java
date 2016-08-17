@@ -6,13 +6,13 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListCellRenderer;
@@ -21,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
@@ -37,72 +38,96 @@ public class Launcher {
 
 	private static final DefaultListModel<GameInfo> gameListModel = new DefaultListModel<GameInfo>();
 	private JTextArea textArea;
-
-	public Launcher() {
-
-		try {
-			parseGameInfos();
-
-			JList list = new JList(gameListModel);
-			list.setCellRenderer(new GameListRenderer());
-			list.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					JList list = (JList) evt.getSource();
-					if (evt.getClickCount() == 1) {
-						int index = list.locationToIndex(evt.getPoint());
-						GameInfo gameInfo = gameListModel.elementAt(index);
-						textArea.setText(gameInfo.description);
-					} else if (evt.getClickCount() == 2) {
-						// Double-click detected
-						int index = list.locationToIndex(evt.getPoint());
-						GameInfo gameInfo = gameListModel.elementAt(index);
-
-						try {
-							Method startMethod = gameInfo.gameClass.getMethod("main", String[].class); //stringArray.getClass()
-							Object instance = gameInfo.gameClass.newInstance();
-							String[] params = null;
-							startMethod.invoke(instance, (Object) params);
-						} catch (InstantiationException e) {
-							e.printStackTrace();
-						} catch (IllegalAccessException e) {
-							e.printStackTrace();
-						} catch (NoSuchMethodException e) {
-							e.printStackTrace();
-						} catch (SecurityException e) {
-							e.printStackTrace();
-						} catch (IllegalArgumentException e) {
-							e.printStackTrace();
-						} catch (InvocationTargetException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			});
-
-			JScrollPane scroll = new JScrollPane(list);
-			scroll.setPreferredSize(new Dimension(400, 400));
-
-			textArea = new JTextArea();
-			textArea.setPreferredSize(new Dimension(400, 400));
-			textArea.setLineWrap(true);
-			textArea.setWrapStyleWord(true);
-
-			JFrame frame = new JFrame();
-			frame.setLayout(new FlowLayout());
-			frame.add(scroll);
-			frame.add(textArea);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.pack();
-			frame.setLocationRelativeTo(null);
-			frame.setVisible(true);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+	
+	public Launcher() throws IOException {
+		parseGameInfos();
 	}
 
-	public void parseGameInfos() throws IOException {
+	private void startUI() {
+		JList list = new JList(gameListModel);
+		list.setCellRenderer(new GameListRenderer());
+		list.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				JList list = (JList) evt.getSource();
+				if (evt.getClickCount() == 1) {
+					int index = list.locationToIndex(evt.getPoint());
+					GameInfo gameInfo = gameListModel.elementAt(index);
+					textArea.setText(gameInfo.description);
+					textArea.setCaretPosition(0);
+				} else if (evt.getClickCount() == 2) {
+					// Double-click detected
+					int index = list.locationToIndex(evt.getPoint());
+					GameInfo gameInfo = gameListModel.elementAt(index);
+
+					try {
+						//						Method startMethod = gameInfo.gameClass.getMethod("main", String[].class); //stringArray.getClass()
+						//						Object instance = gameInfo.gameClass.newInstance();
+						//						String[] params = null;
+						//						startMethod.invoke(instance, (Object) params);
+
+						Game game = (Game) gameInfo.gameClass.newInstance();
+						startGame(game, gameInfo);
+
+					} catch (InstantiationException e) {
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+					} catch (SecurityException e) {
+						e.printStackTrace();
+					} catch (IllegalArgumentException e) {
+						e.printStackTrace();
+					} /*catch (InvocationTargetException e) {
+						e.printStackTrace();
+						} catch (NoSuchMethodException e) {
+						e.printStackTrace();
+						}*/
+				}
+			}
+		});
+
+		JScrollPane listScroll = new JScrollPane(list);
+		listScroll.setPreferredSize(new Dimension(350, 400));
+
+		textArea = new JTextArea();
+		textArea.setEditable(false);
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+		JScrollPane textScroll = new JScrollPane(textArea);
+		textScroll.setPreferredSize(new Dimension(400, 400));
+
+		JFrame frame = new JFrame("Java 4K games");
+		frame.setLayout(new FlowLayout());
+		frame.add(listScroll);
+		frame.add(textScroll);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+	}
+
+	private void startGame(final Game game, GameInfo info) {
+		javax.swing.JFrame frame = new javax.swing.JFrame(info.name);
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				game.stop();
+			}
+		});
+		frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+
+		JPanel panel = game.getPanel();
+		frame.add(panel, java.awt.BorderLayout.CENTER);
+
+		frame.setResizable(false);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+		panel.requestFocusInWindow();
+
+		game.start();
+	}
+
+	private void parseGameInfos() throws IOException {
 
 		for (int i = 0; i < GAME_CLASSES.length; i++) {
 			Class gameClass = GAME_CLASSES[i];
@@ -169,7 +194,7 @@ public class Launcher {
 		//String instructions;
 	}
 
-	public class GameListRenderer extends DefaultListCellRenderer {
+	private class GameListRenderer extends DefaultListCellRenderer {
 
 		Font font = new Font("helvitica", Font.BOLD, 12);
 
@@ -186,11 +211,19 @@ public class Launcher {
 	}
 
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new Launcher();
-			}
-		});
+
+		try {
+			final Launcher launcher = new Launcher();
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					launcher.startUI();
+				}
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		
 	}
 
 }
