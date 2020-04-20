@@ -1,1 +1,1 @@
-Java4K
+This repository was created in 2015 for historic purposes. Since then, one of the main authors (Mike Birken) wrote some very interesting [development notes](https://meatfighter.com/java4k/) with a similar package.
